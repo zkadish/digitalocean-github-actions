@@ -23,7 +23,7 @@ fastify.get('/shutdown', async () => {
   return { shutdown: true };
 });
 
-fastify.listen({ port: 3000 }, (err, address) => {
+fastify.listen({ port: 80 }, (err, address) => {
   if (err) throw err
   console.log(`Server is now listening on ${address}`);
 })

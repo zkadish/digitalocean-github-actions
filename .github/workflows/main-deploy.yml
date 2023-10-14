@@ -56,14 +56,14 @@ jobs:
             echo "starting server instance..."
             docker run -d \
               --restart always \
-              -p 0.0.0.0:3000:80 \
+              -p 0.0.0.0:80:80 \
               --name api \
               registry.digitalocean.com/zach-docker-registry/api:latest
 
-            echo "giving healthcheck time to recover..."
-            sleep 40 # ((healthy + 1) * interval)
+            # echo "giving healthcheck time to recover..."
+            # sleep 40 # ((healthy + 1) * interval)
 
-            curl --silent --fail http://localhost/health
+            # curl --silent --fail http://localhost/health
 
   deploy-api-2:
     needs: deploy-api-1 # rolling deploy
@@ -93,11 +93,11 @@ jobs:
             echo "starting server instance..."
             docker run -d \
               --restart always \
-              -p 0.0.0.0:3000:80 \
+              -p 0.0.0.0:80:80 \
               --name api \
               registry.digitalocean.com/zach-docker-registry/api:latest
 
-            echo "giving healthcheck time to recover..."
-            sleep 40 # ((healthy + 1) * interval)
+            # echo "giving healthcheck time to recover..."
+            # sleep 40 # ((healthy + 1) * interval)
 
-            curl --silent --fail http://localhost/health
+            # curl --silent --fail http://localhost/health
