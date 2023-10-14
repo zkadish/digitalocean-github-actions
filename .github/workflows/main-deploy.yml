@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Check Out Repo 
+      - name: Check Out Repo
         uses: actions/checkout@v2
       - name: Install DigitalOcean Controller
         uses: digitalocean/action-doctl@v2
@@ -34,7 +34,7 @@ jobs:
     steps:
       # Droplets already have docker, doctl + auth, and curl installed
       - name: Deploy api to DigitalOcean Droplet
-        uses: appleboy/ssh-action@v0.1.4
+        uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.DO_API1_HOST }}
           username: root
