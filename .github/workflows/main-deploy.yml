@@ -20,7 +20,7 @@ jobs:
       - name: Authenticate with DigitalOcean Container Registry
         run: doctl registry login --expiry-seconds 180
       - name: Build and Push to DigitalOcean Container Registry
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v5.0.0
         with:
           context: .
           push: true
