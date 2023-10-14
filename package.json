@@ -18,6 +18,6 @@
   },
   "homepage": "https://github.com/zkadish/digitalocean-github-actions#readme",
   "dependencies": {
-    "fastify": "^3.29.5"
+    "fastify": "^4.24.1"
   }
 }
