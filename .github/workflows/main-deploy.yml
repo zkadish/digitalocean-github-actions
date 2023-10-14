@@ -64,3 +64,40 @@ jobs:
             sleep 40 # ((healthy + 1) * interval)
 
             curl --silent --fail http://localhost/health
+
+  deploy-api-2:
+    needs: deploy-api-1 # rolling deploy
+    runs-on: ubuntu-latest
+    steps:
+      # Droplets already have docker, doctl + auth, and curl installed
+      - name: Deploy api to DigitalOcean Droplet
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.DO_API2_HOST }}
+          username: root
+          key: ${{ secrets.DO_API2_KEY }}
+          port: 22
+          script: |
+            doctl registry login --expiry-seconds 180
+            docker pull registry.digitalocean.com/zach-docker-registry/api:latest
+
+            echo "calling shutdown endpoint..."
+            curl --silent http://localhost/shutdown || true
+
+            echo "giving healthcheck time to fail..."
+            sleep 30 # ((unhealthy + 1) * interval)
+
+            docker stop api || true
+            docker rm api || true
+
+            echo "starting server instance..."
+            docker run -d \
+              --restart always \
+              -p 0.0.0.0:80:80 \
+              --name api \
+              registry.digitalocean.com/zach-docker-registry/api:latest
+
+            echo "giving healthcheck time to recover..."
+            sleep 40 # ((healthy + 1) * interval)
+
+            curl --silent --fail http://localhost/health
