@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 
 import Fastify from 'fastify';
+
 const fastify = Fastify({
   logger: true
 });
+
 let die = false;
 const id = Math.floor(Math.random()*1000);
 
@@ -17,12 +19,12 @@ fastify.get('/health', async (_req, reply) => {
   }
 });
 
-// Run the server!
 fastify.get('/shutdown', async () => {
   die = true;
   return { shutdown: true };
 });
 
+// Run the server!
 fastify.listen({ port: 80 }, (err, address) => {
   if (err) throw err
   console.log(`Server is now listening on ${address}`);
